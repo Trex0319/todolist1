@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     $todos = [];
 
     $database = new PDO('mysql:host=devkinsta_db;dbname=Todo_List', 'root', 'r9wz9RSYYaTbjS7v');
@@ -8,6 +10,15 @@
     $query = $database->prepare($sql);
     $query->execute();
     $todos = $query->fetchAll();
+
+        // get students data from database (recipe)
+        $sql = 'SELECT * FROM users';
+        // prepare SQL query (prepare your materials)
+        $query = $database->prepare($sql);
+        // execute SQL squery (to cook)
+        $query->execute();
+        // fetch all results (eat)
+        $students = $query->fetchAll();
     ?>
 
 <!DOCTYPE html>
@@ -31,6 +42,20 @@
     </style>
   </head>
   <body>
+
+  <div class="card rounded shadow-sm mx-auto my-4" style="max-width: 500px;">
+        <div class="card-body">
+            <h3 class="card-title mb-3">My Classroom</h3>
+            <div class="d-flex gap-3">
+                <?php if ( isset( $_SESSION["users"] ) ) { ?>
+                    <!-- <a href="logout.php">Logout</a> -->
+                <?php } else { ?>
+                    <a href="login.php">Login</a>
+                    <a href="signup.php">Sign Up</a>
+                <?php } ?>
+            </div>
+
+  <?php if ( isset( $_SESSION["users"] ) ) { ?>
     <div
       class="card rounded shadow-sm"
       style="max-width: 500px; margin: 60px auto;"
@@ -92,7 +117,18 @@
           </form>
         </div>
       </div>
-    </div>
+    </div>    
+    <div
+          class="d-flex justify-content-center align-items-center gap-3 mx-auto pt-3"
+          style="max-width: 500px;"
+        >
+          <a href="logout.php" class="text-decoration-none small"
+            ><i class="bi bi-arrow-left-circle"></i> Log Out</a
+          >
+        </div>
+      </div>
+    <?php } ?>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
