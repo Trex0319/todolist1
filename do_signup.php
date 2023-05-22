@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+
+
     // connect to database (PDO - PHP database Object)
     $database = new PDO(
         "mysql:host=devkinsta_db;dbname=Todo_List", 
@@ -12,15 +15,29 @@
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
 
+        // recipe
+        $sql = "SELECT * FROM users where email = :email";
+        // prepare
+        $query = $database->prepare( $sql );
+        // execute
+        $query->execute([
+            'email' => $email
+        ]);
+        // fetch (eat)
+        $user = $query->fetch(); // fetch() will only return one row of data
+
         // 1. make sure all fields are not empty
         if ( empty( $name ) || empty($email) || empty($password) || empty($confirm_password)  ) {
-            echo 'All fields are required';
+            $error = 'All fields are required';
         } else if ( $password !== $confirm_password ) {
             // 2. make sure password is match
-            echo 'The password is not match.';
+            $error = 'The password is not match.';
         } else if ( strlen( $password ) < 8 ) {
             // 3. make sure password is at least 8 chars.
-            echo "Your password must be at least 8 characters";
+            $error = "Your password must be at least 8 characters";
+        } else if ( $user ) {
+                // 4. make sure email provided is not already exists in the users table
+            $error = "The email you inserted has already been used by another user. Please insert another email.";
         } else {
             // recipe
             $sql = "INSERT INTO users ( `name`, `email`, `password` )
@@ -33,6 +50,16 @@
                 'email' => $email,
                 'password' => password_hash( $password, PASSWORD_DEFAULT )
             ]);
-            header('Location: index.php');
+            header('Location: /index');
+            exit;
+        }
+
+        
+        // do error checking
+        if ( isset( $error ) ) {
+            // store the error message in session
+            $_SESSION['error'] = $error;
+            // redirect the user back to login.php
+            header("Location: /signup");
             exit;
         }

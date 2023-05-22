@@ -26,7 +26,7 @@
             'id' => $student_id
         ]);
 
-        header("Location: index.php");
+        header("Location: /");
         exit;
 
     }

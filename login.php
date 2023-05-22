@@ -20,6 +20,17 @@
     <div class="card rounded shadow-sm mx-auto my-4" style="max-width: 500px;">
         <div class="card-body">
             <h3 class="card-title mb-3">Login to your account</h3>
+                       <?php 
+                // 1. check if there is a err
+                if ( isset( $_SESSION['error'] ) ) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= $_SESSION['error']; ?>
+                    <?php
+                        // once it's printed, you delete the session
+                        unset( $_SESSION['error'] );
+                    ?>
+                </div>
+            <?php endif; ?>
             <form action="do_login.php" method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
@@ -39,10 +50,10 @@
           class="d-flex justify-content-between align-items-center gap-3 mx-auto pt-3"
           style="max-width: 500px;"
         >
-          <a href="index.php" class="text-decoration-none small"
+          <a href="/" class="text-decoration-none small"
             ><i class="bi bi-arrow-left-circle"></i> Go back</a
           >
-          <a href="signup.php" class="text-decoration-none small"
+          <a href="/signup" class="text-decoration-none small"
             >Don't have an account? Sign up here
             <i class="bi bi-arrow-right-circle"></i
           ></a>
