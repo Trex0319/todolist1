@@ -43,7 +43,7 @@
 
   <div class="card rounded shadow-sm mx-auto my-4" style="max-width: 500px;">
         <div class="card-body">
-            <h3 class="card-title mb-3">My Classroom</h3>
+            <h3 class="card-title mb-3">My Todo List</h3>
             <div class="d-flex gap-3">
                 <?php if ( isset( $_SESSION["users"] ) ) { ?>
                     <!-- <a href="logout.php">Logout</a> -->
