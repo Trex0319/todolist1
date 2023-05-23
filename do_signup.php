@@ -50,7 +50,7 @@ session_start();
                 'email' => $email,
                 'password' => password_hash( $password, PASSWORD_DEFAULT )
             ]);
-            header('Location: /index');
+            header('Location: /login');
             exit;
         }
 
