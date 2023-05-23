@@ -1,13 +1,5 @@
 <?php
-    // start a session
-    session_start();
-
-    // connect to database (PDO - PHP database Object)
-    $database = new PDO(
-        "mysql:host=devkinsta_db;dbname=Todo_List", 
-        "root", // username
-        "r9wz9RSYYaTbjS7v" // password 
-    );
+    $database = connectToDB();
 
     $email = $_POST["email"];
     $password = $_POST["password"];

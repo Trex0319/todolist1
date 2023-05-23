@@ -1,17 +1,6 @@
 <?php
 
-session_start();
-
-$todos = [];
-
-$database = new PDO('mysql:host=devkinsta_db;dbname=Todo_List', 'root', 'r9wz9RSYYaTbjS7v');
-
-$sql = "SELECT  * FROM todos";
-
-$query = $database->prepare($sql);
-$query->execute();
-
-$todos = $query->fetchALL();
+$database = connectToDB();
 
 $item_name = $_POST['item_name'];
 

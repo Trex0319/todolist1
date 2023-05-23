@@ -1,10 +1,6 @@
 <?php
 
-    // $todos = []; 
-
-    $database = new PDO("mysql:host=devkinsta_db;dbname=Todo_List", "root", "r9wz9RSYYaTbjS7v");
-
-    // $sql = "SELECT  * FROM todos";
+    $database = connectToDB();
 
     $update_complete = $_POST["update_complete"];
     $update_id = $_POST["update_id"];
