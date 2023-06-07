@@ -1,13 +1,12 @@
 <?php
 
-    $todos = [];
+    // start with an empty array for students
+    $students = [];
 
-    $database = connectToDB();
+    $db = new DB();
 
-    $sql = "SELECT * FROM todos";
-    $query = $database->prepare($sql);
-    $query->execute();
-    $todos = $query->fetchAll();
+    // call the fetchAll function from the DB class to get all the students
+    $todos = $db->fetchAll('SELECT * FROM todos');
 
         require 'parts/header.php';
     ?>

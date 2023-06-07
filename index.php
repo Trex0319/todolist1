@@ -3,39 +3,47 @@
     // enable session in /
     session_start();
 
-    require "includes/function.php";
+    // require all the classes file
+    require "includes/class-db.php";
+    require "includes/class-auth.php";
+    require "includes/class-student.php";
 
+    // your website path
     // parse_url will remove all the query string starting from the ?
     $path = parse_url( $_SERVER["REQUEST_URI"], PHP_URL_PATH );
     // remove / using trim()
     $path = trim( $path, '/' );
 
-    switch ($path) {
+    // init the auth class once
+    $auth = new Auth();
+    $task = new Student();
+
+    switch( $path ) {
         case 'auth/login':
-            require 'includes/auth/login.php';
+            $auth->login();
             break;
         case 'auth/signup':
-            require 'includes/auth/signup.php';
+            $auth->signup();
             break;
         case 'task/add':
-            require 'includes/task/add.php';
-            break;  
+            $task->add();
+            break;
         case 'task/update':
-            require 'includes/task/update.php';
-            break;  
+            $task->update();
+            break;
         case 'task/delete':
-            require 'includes/task/delete.php';
-            break;  
-        case 'login': // condition
-            require "pages/login.php";
+            $task->delete();
             break;
-        case 'signup': // condition
-            require "pages/signup.php";
+        case 'login':
+            require 'pages/login.php';
             break;
-        case 'logout': // condition
-            require "pages/logout.php";
+        case 'signup':
+            require 'pages/signup.php';
+            break;
+        case 'logout':
+            $auth->logout();
             break;
         default:
-            require "pages/home.php";
+            require 'pages/home.php';
             break;
     }
